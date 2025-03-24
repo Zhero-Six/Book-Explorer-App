@@ -8,7 +8,7 @@ let isGridView = false;
 
 async function fetchBooks() {
     try {
-        const response = await fetch(localDbUrl); // Use json-server first
+        const response = await fetch(localDbUrl); // Prefer json-server
         if (!response.ok) throw new Error("Local fetch failed");
         books = await response.json();
         displayBooks(books);
@@ -36,7 +36,7 @@ function displayBooks(bookList) {
             <p>Author: ${book.authors[0]}</p>
             <p>ISBN: ${book.isbn || "N/A"}</p>
             <p class="details" style="display: none;">Pages: ${book.numberOfPages}</p>
-            <button class="like-btn" data-url="${book.url}">Likes: ${book.likes}</button>
+            <button class="like-btn" data-id="${book.id}">Likes: ${book.likes}</button>
         `;
         bookContainer.appendChild(bookDiv);
     });
@@ -61,11 +61,11 @@ function addLikeListeners() {
     const likeButtons = document.querySelectorAll(".like-btn");
     likeButtons.forEach(btn => {
         btn.addEventListener("click", async () => {
-            const url = btn.dataset.url;
-            const book = books.find(b => b.url === url);
+            const id = btn.dataset.id;
+            const book = books.find(b => b.id == id);
             const newLikes = book.likes + 1;
             try {
-                await fetch(`${localDbUrl}?url=${encodeURIComponent(url)}`, {
+                await fetch(`${localDbUrl}/${id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ likes: newLikes })

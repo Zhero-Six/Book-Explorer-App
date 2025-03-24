@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "url": "https://anapioficeandfire.com/api/books/1",
         "name": "A Game of Thrones",
         "isbn": "978-0553103540",
@@ -14,6 +15,7 @@
         "likes": 0
     },
     {
+        "id": 2,
         "url": "https://anapioficeandfire.com/api/books/2",
         "name": "A Clash of Kings",
         "isbn": "978-0553108033",
@@ -28,6 +30,7 @@
         "likes": 0
     },
     {
+        "id": 3,
         "url": "https://anapioficeandfire.com/api/books/3",
         "name": "A Storm of Swords",
         "isbn": "978-0553106633",
@@ -42,6 +45,7 @@
         "likes": 0
     },
     {
+        "id": 4,
         "url": "https://anapioficeandfire.com/api/books/5",
         "name": "A Feast for Crows",
         "isbn": "978-0553801507",
@@ -56,6 +60,7 @@
         "likes": 0
     },
     {
+        "id": 5,
         "url": "https://anapioficeandfire.com/api/books/8",
         "name": "A Dance with Dragons",
         "isbn": "978-0553801477",
@@ -70,6 +75,7 @@
         "likes": 0
     },
     {
+        "id": 6,
         "url": "https://anapioficeandfire.com/api/books/4",
         "name": "The Hedge Knight",
         "isbn": "978-0765300355",
@@ -84,6 +90,7 @@
         "likes": 0
     },
     {
+        "id": 7,
         "url": "https://anapioficeandfire.com/api/books/6",
         "name": "The Sworn Sword",
         "isbn": "978-0785126508",
@@ -98,6 +105,7 @@
         "likes": 0
     },
     {
+        "id": 8,
         "url": "https://anapioficeandfire.com/api/books/7",
         "name": "The Mystery Knight",
         "isbn": "978-0765360267",
@@ -112,6 +120,7 @@
         "likes": 0
     },
     {
+        "id": 9,
         "url": "https://anapioficeandfire.com/api/books/9",
         "name": "The Princess and the Queen",
         "isbn": "978-0765332066",
@@ -126,6 +135,7 @@
         "likes": 0
     },
     {
+        "id": 10,
         "url": "https://anapioficeandfire.com/api/books/10",
         "name": "The Rogue Prince",
         "isbn": "978-0345534026",
