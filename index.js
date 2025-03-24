@@ -1,92 +1,88 @@
-// State management
-let allBooks = [];
-let currentView = 'list';
+const apiUrl = "https://anapioficeandfire.com/api/books";
+const localDbUrl = "db.json"; // Local fallback file
+const bookContainer = document.getElementById("bookContainer");
+const searchInput = document.getElementById("search");
+const toggleViewBtn = document.getElementById("toggleView");
+let books = [];
+let isGridView = false;
 
-// Fetch books from API
-function fetchBooks() {
-    return fetch('https://anapioficeandfire.com/api/books')
-        .then(response => response.json())
-        .then(books => {
-            allBooks = books.map(book => ({...book, liked: false}));
-            // Save to json-server
-            return fetch('http://localhost:3000/books', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(allBooks)
-            });
-        })
-        .then(() => fetch('http://localhost:3000/books'))
-        .then(response => response.json())
-        .then(localBooks => {
-            allBooks = localBooks;
-            renderBooks(allBooks);
-            return allBooks;
-        });
+// Fetch books from API or fallback to local db.json
+async function fetchBooks() {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("API fetch failed");
+        books = await response.json();
+        displayBooks(books);
+    } catch (error) {
+        console.warn("API fetch failed, falling back to local db.json:", error);
+        try {
+            const localResponse = await fetch(localDbUrl);
+            if (!localResponse.ok) throw new Error("Local fetch failed");
+            books = await localResponse.json();
+            displayBooks(books);
+        } catch (localError) {
+            console.error("Error fetching local db.json:", localError);
+            bookContainer.innerHTML = "<p>Failed to load books from both API and local source.</p>";
+        }
+    }
 }
-// Render books based on current view
-function renderBooks(books) {
-    const main = document.querySelector('main');
-    main.className = `${currentView}-view`;
-    main.innerHTML = '';
-    
-    books.forEach(book => {
-        const bookElement = document.createElement('div');
-        bookElement.className = `book-card ${book.liked ? 'liked' : ''}`;
-        bookElement.innerHTML = `
+
+// Display books
+function displayBooks(bookList) {
+    bookContainer.innerHTML = "";
+    bookList.forEach(book => {
+        const bookDiv = document.createElement("div");
+        bookDiv.classList.add("book");
+        const isLiked = localStorage.getItem(book.isbn) === "liked";
+        bookDiv.innerHTML = `
             <h2>${book.name}</h2>
             <p>Author: ${book.authors[0]}</p>
-            <p>Pages: ${book.numberOfPages}</p>
-            <p>Released: ${book.released.split('T')[0]}</p>
-            <button class="like-btn" data-id="${book.isbn}">
-                ${book.liked ? 'Unlike' : 'Like'}
+            <p>ISBN: ${book.isbn || "N/A"}</p>
+            <button class="like-btn ${isLiked ? "liked" : ""}" data-isbn="${book.isbn}">
+                ${isLiked ? "Unlike" : "Like"}
             </button>
         `;
-        main.appendChild(bookElement);
+        bookContainer.appendChild(bookDiv);
+    });
+    addLikeListeners();
+}
+
+// Search functionality
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const filteredBooks = books.filter(book => book.name.toLowerCase().includes(query));
+    displayBooks(filteredBooks);
+});
+
+// Toggle between list and grid view
+toggleViewBtn.addEventListener("click", () => {
+    isGridView = !isGridView;
+    bookContainer.classList.toggle("grid-view", isGridView);
+    bookContainer.classList.toggle("list-view", !isGridView);
+    toggleViewBtn.textContent = isGridView ? "List View" : "Grid View";
+});
+
+// Like button functionality
+function addLikeListeners() {
+    const likeButtons = document.querySelectorAll(".like-btn");
+    likeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const isbn = btn.dataset.isbn;
+            const isLiked = localStorage.getItem(isbn) === "liked";
+            if (isLiked) {
+                localStorage.removeItem(isbn);
+                btn.textContent = "Like";
+                btn.classList.remove("liked");
+            } else {
+                localStorage.setItem(isbn, "liked");
+                btn.textContent = "Unlike";
+                btn.classList.add("liked");
+            }
+        });
     });
 }
 
-// Search books
-function searchBooks(event) {
-    event.preventDefault();
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    const filteredBooks = allBooks.filter(book => 
-        book.name.toLowerCase().includes(searchTerm)
-    );
-    renderBooks(filteredBooks);
-}
-
-// Toggle view between list and grid
-function toggleView() {
-    currentView = currentView === 'list' ? 'grid' : 'list';
-    document.getElementById('view-toggle').textContent = 
-        `Switch to ${currentView === 'list' ? 'Grid' : 'List'} View`;
-    renderBooks(allBooks);
-}
-
-// Handle like button clicks
-function handleLike(event) {
-    if (event.target.className === 'like-btn') {
-        const isbn = event.target.dataset.id;
-        const book = allBooks.find(b => b.isbn === isbn);
-        book.liked = !book.liked;
-        fetch(`http://localhost:3000/books/${book.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ liked: book.liked })
-        });
-        renderBooks(allBooks);
-    }
-}
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    fetchBooks();
-    
-    // Search form submission
-    document.getElementById('search-form').addEventListener('submit', searchBooks);
-    
-    // View toggle
-    document.getElementById('view-toggle').addEventListener('click', toggleView);
-    
-    // Like buttons
-    document.querySelector('main').addEventListener('click', handleLike);
-});
+// Initial setup
+fetchBooks();
+bookContainer.classList.add("list-view");
+toggleViewBtn.textContent = "Grid View";
