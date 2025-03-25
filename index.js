@@ -1,5 +1,5 @@
 const apiUrl = "https://anapioficeandfire.com/api/books";
-const localDbUrl = "http://localhost:3000/books"; // json-server endpoint
+const localDbUrl = "http://localhost:3000/books";
 const bookContainer = document.getElementById("bookContainer");
 const searchInput = document.getElementById("search");
 const toggleViewBtn = document.getElementById("toggleView");
@@ -8,7 +8,7 @@ let isGridView = false;
 
 async function fetchBooks() {
     try {
-        const response = await fetch(localDbUrl); // Prefer json-server
+        const response = await fetch(localDbUrl); 
         if (!response.ok) throw new Error("Local fetch failed");
         books = await response.json();
         displayBooks(books);
