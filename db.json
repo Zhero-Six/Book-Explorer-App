@@ -11,8 +11,7 @@
         "mediaType": "Hardcover",
         "released": "1996-08-01T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/2", "https://anapioficeandfire.com/api/characters/11", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."]
     },
     {
         "id": 2,
@@ -26,8 +25,8 @@
         "mediaType": "Hardcover",
         "released": "1999-02-02T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/2", "https://anapioficeandfire.com/api/characters/12", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."]
+
     },
     {
         "id": 3,
@@ -41,8 +40,7 @@
         "mediaType": "Hardcover",
         "released": "2000-08-08T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/2", "https://anapioficeandfire.com/api/characters/13", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/208", "..."]
     },
     {
         "id": 4,
@@ -56,8 +54,7 @@
         "mediaType": "Hardcover",
         "released": "2005-11-08T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/4", "https://anapioficeandfire.com/api/characters/15", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/168", "..."],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/148", "https://anapioficeandfire.com/api/characters/168", "..."]
     },
     {
         "id": 5,
@@ -71,8 +68,7 @@
         "mediaType": "Hardcover",
         "released": "2011-07-12T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/2", "https://anapioficeandfire.com/api/characters/11", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/130", "https://anapioficeandfire.com/api/characters/148", "..."],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/130", "https://anapioficeandfire.com/api/characters/148", "..."]
     },
     {
         "id": 6,
@@ -86,8 +82,7 @@
         "mediaType": "Graphic Novel",
         "released": "2004-03-09T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/29", "https://anapioficeandfire.com/api/characters/38", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"]
     },
     {
         "id": 7,
@@ -101,8 +96,7 @@
         "mediaType": "Graphic Novel",
         "released": "2008-06-18T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/29", "https://anapioficeandfire.com/api/characters/55", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"]
     },
     {
         "id": 8,
@@ -116,8 +110,7 @@
         "mediaType": "Paperback",
         "released": "2011-03-29T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/29", "https://anapioficeandfire.com/api/characters/38", "..."],
-        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"],
-        "likes": 0
+        "povCharacters": ["https://anapioficeandfire.com/api/characters/329"]
     },
     {
         "id": 9,
@@ -131,8 +124,7 @@
         "mediaType": "Hardcover",
         "released": "2013-12-03T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/33", "https://anapioficeandfire.com/api/characters/42", "..."],
-        "povCharacters": [],
-        "likes": 0
+        "povCharacters": []
     },
     {
         "id": 10,
@@ -146,7 +138,6 @@
         "mediaType": "Hardcover",
         "released": "2014-06-17T00:00:00",
         "characters": ["https://anapioficeandfire.com/api/characters/42", "https://anapioficeandfire.com/api/characters/46", "..."],
-        "povCharacters": [],
-        "likes": 0
+        "povCharacters": []
     }
 ]

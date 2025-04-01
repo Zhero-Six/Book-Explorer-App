@@ -59,3 +59,12 @@ header {
     background-color: #ff4444;
     color: white;
 }
+.like-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.like-btn.liked {
+    background-color: #ff4444;
+    color: white;
+}

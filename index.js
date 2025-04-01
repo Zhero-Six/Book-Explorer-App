@@ -36,7 +36,7 @@ function displayBooks(bookList) {
             <p>Author: ${book.authors[0]}</p>
             <p>ISBN: ${book.isbn || "N/A"}</p>
             <p class="details" style="display: none;">Pages: ${book.numberOfPages}</p>
-            <button class="like-btn" data-id="${book.id}">Likes: ${book.likes}</button>
+            <button class="like-btn" data-id="${book.id}">Like</button>
         `;
         bookContainer.appendChild(bookDiv);
     });
@@ -63,7 +63,7 @@ function addLikeListeners() {
         btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
             const book = books.find(b => b.id == id);
-            const newLikes = book.likes + 1;
+            const newLikes = (book.likes || 0) + 1;
             try {
                 await fetch(`${localDbUrl}/${id}`, {
                     method: "PATCH",
@@ -71,7 +71,8 @@ function addLikeListeners() {
                     body: JSON.stringify({ likes: newLikes })
                 });
                 book.likes = newLikes;
-                btn.textContent = `Likes: ${newLikes}`;
+                // Optional: You could add visual feedback here
+                btn.classList.add("liked");
             } catch (error) {
                 console.error("Error updating likes:", error);
             }
