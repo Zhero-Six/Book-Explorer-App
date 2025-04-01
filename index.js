@@ -31,12 +31,15 @@ function displayBooks(bookList) {
     bookList.forEach(book => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
+        const isLiked = book.isLiked || false; // Check if the book is liked
         bookDiv.innerHTML = `
             <h2>${book.name}</h2>
             <p>Author: ${book.authors[0]}</p>
             <p>ISBN: ${book.isbn || "N/A"}</p>
             <p class="details" style="display: none;">Pages: ${book.numberOfPages}</p>
-            <button class="like-btn" data-id="${book.id}">Like</button>
+            <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${book.id}">
+                ${isLiked ? 'Unlike' : 'Like'}
+            </button>
         `;
         bookContainer.appendChild(bookDiv);
     });
@@ -63,16 +66,29 @@ function addLikeListeners() {
         btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
             const book = books.find(b => b.id == id);
-            const newLikes = (book.likes || 0) + 1;
+            const currentLikes = book.likes || 0;
+            const isCurrentlyLiked = book.isLiked || false;
+            const newLikes = isCurrentlyLiked ? currentLikes - 1 : currentLikes + 1;
+            const newLikedState = !isCurrentlyLiked;
+
             try {
                 await fetch(`${localDbUrl}/${id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ likes: newLikes })
+                    body: JSON.stringify({ 
+                        likes: newLikes,
+                        isLiked: newLikedState 
+                    })
                 });
+                
+                // Update local book data
                 book.likes = newLikes;
-                // Optional: You could add visual feedback here
-                btn.classList.add("liked");
+                book.isLiked = newLikedState;
+
+                // Update button visuals
+                btn.classList.toggle("liked");
+                btn.textContent = newLikedState ? 'Unlike' : 'Like';
+
             } catch (error) {
                 console.error("Error updating likes:", error);
             }

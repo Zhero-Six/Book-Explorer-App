@@ -128,3 +128,25 @@ header h1 {
 .like-btn.liked:hover {
     background-color: #cc3333; /* Darker red on hover when liked */
 }
+.like-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.like-btn.liked {
+    background-color: #ff4444;
+    color: white;
+    border-color: #ff4444;
+}
+
+.like-btn.liked:hover {
+    background-color: #cc3333; /* Darker red on hover */
+}
