@@ -1,5 +1,4 @@
 const apiUrl = "https://anapioficeandfire.com/api/books";
-const localDbUrl = "http://localhost:3000/books";
 const bookContainer = document.getElementById("bookContainer");
 const searchInput = document.getElementById("search");
 const toggleViewBtn = document.getElementById("toggleView");
@@ -8,21 +7,19 @@ let isGridView = false;
 
 async function fetchBooks() {
     try {
-        const response = await fetch(localDbUrl); 
-        if (!response.ok) throw new Error("Local fetch failed");
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("API fetch failed");
         books = await response.json();
+        
+        books = books.map(book => ({
+            ...book,
+            likes: 0,
+            isLiked: false
+        }));
         displayBooks(books);
-    } catch (error) {
-        console.warn("Local fetch failed, trying API:", error);
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) throw new Error("API fetch failed");
-            books = await response.json();
-            displayBooks(books);
-        } catch (apiError) {
-            console.error("Error fetching books:", apiError);
-            bookContainer.innerHTML = "<p>Failed to load books.</p>";
-        }
+    } catch (apiError) {
+        console.error("Error fetching books from API:", apiError);
+        bookContainer.innerHTML = "<p>Failed to load books.</p>";
     }
 }
 
@@ -31,7 +28,7 @@ function displayBooks(bookList) {
     bookList.forEach(book => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
-        const isLiked = book.isLiked || false; // Check if the book is liked
+        const isLiked = book.isLiked || false;
         bookDiv.innerHTML = `
             <h2>${book.name}</h2>
             <p>Author: ${book.authors[0]}</p>
@@ -63,7 +60,7 @@ toggleViewBtn.addEventListener("click", () => {
 function addLikeListeners() {
     const likeButtons = document.querySelectorAll(".like-btn");
     likeButtons.forEach(btn => {
-        btn.addEventListener("click", async () => {
+        btn.addEventListener("click", () => {
             const id = btn.dataset.id;
             const book = books.find(b => b.id == id);
             const currentLikes = book.likes || 0;
@@ -71,27 +68,12 @@ function addLikeListeners() {
             const newLikes = isCurrentlyLiked ? currentLikes - 1 : currentLikes + 1;
             const newLikedState = !isCurrentlyLiked;
 
-            try {
-                await fetch(`${localDbUrl}/${id}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        likes: newLikes,
-                        isLiked: newLikedState 
-                    })
-                });
-                
-                // Update local book data
-                book.likes = newLikes;
-                book.isLiked = newLikedState;
+            
+            book.likes = newLikes;
+            book.isLiked = newLikedState;
 
-                // Update button visuals
-                btn.classList.toggle("liked");
-                btn.textContent = newLikedState ? 'Unlike' : 'Like';
-
-            } catch (error) {
-                console.error("Error updating likes:", error);
-            }
+            btn.classList.toggle("liked");
+            btn.textContent = newLikedState ? 'Unlike' : 'Like';
         });
     });
 }
